@@ -1,7 +1,7 @@
 /*
 - Author: Eric M.
 - Purpose: GitHub Repo Gallery Program
-- Date: 11-NOV-2022
+- Date: 11-NOV-2022 thru 12-NOV-2022
 */
 
 //======================================
@@ -28,13 +28,14 @@ const fetchGithub = async function (
 ) {
   const res = await fetch(url);
   const data = await res.json();
+
+  // ******** Delete when program is finished ********
   console.log(data);
+
   displayGithubInfo(data);
 };
 
-// =============
-// ==== fns ====
-// =============
+// --- this fn is linked to fetchGithub async fn
 
 const displayGithubInfo = function (data) {
   const userInfo = document.createElement("div");
@@ -63,9 +64,14 @@ const fetchGithubRepos = async function (
 ) {
   const res = await fetch(url);
   let data = await res.json();
+
+  // ******** Delete when program is finished ********
   console.log(data);
+
   fetchRepoInfo(data);
 };
+
+// --- this fn is linked to fetchGithubRepos async fn
 
 const fetchRepoInfo = function (repos) {
   for (let repo of repos) {
@@ -81,6 +87,7 @@ const fetchRepoInfo = function (repos) {
 // ========================
 
 // --- click on repo name ---
+
 repoList.addEventListener("click", function (e) {
   if (e.target.matches("h3")) {
     const repoName = e.target.innerText;
@@ -89,6 +96,7 @@ repoList.addEventListener("click", function (e) {
 });
 
 // --- async fn for repo name event listener ---
+
 const fetchSpecificRepoInfo = async function (repoName) {
   const res = await fetch(
     `https://api.github.com/repos/${username}/${repoName}`
@@ -102,11 +110,14 @@ const fetchSpecificRepoInfo = async function (repoName) {
   }
 
   displaySpecificRepoInfo(repoInfo, languages);
+
+  // ******** Delete when program is finished ********
   console.log(repoInfo);
   console.log(languages);
 };
 
 // --- fn for specific repo info event listener ---
+
 const displaySpecificRepoInfo = function (repoInfo, lang) {
   repoData.innerHTML = "";
 
@@ -127,7 +138,7 @@ const displaySpecificRepoInfo = function (repoInfo, lang) {
   repos.classList.add("hide");
 };
 
-// ==== fetch data ====
+// ==== fetch data --> init program ====
 
 fetchGithub();
 fetchGithubRepos();
