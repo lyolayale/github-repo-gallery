@@ -18,6 +18,8 @@ const username = "lyolayale";
 const repoList = document.querySelector(".repo-list");
 const repos = document.querySelector(".repos");
 const repoData = document.querySelector(".repo-data");
+const viewRepos = document.querySelector(".view-repos");
+const filterInput = document.querySelector(".filter-repos");
 
 // ===================
 // ==== async fn ====
@@ -74,6 +76,7 @@ const fetchGithubRepos = async function (
 // --- this fn is linked to fetchGithubRepos async fn
 
 const fetchRepoInfo = function (repos) {
+  filterInput.classList.remove("hide");
   for (let repo of repos) {
     const li = document.createElement("li");
     li.classList.add("repo");
@@ -136,9 +139,45 @@ const displaySpecificRepoInfo = function (repoInfo, lang) {
 
   repoData.classList.remove("hide");
   repos.classList.add("hide");
+  viewRepos.classList.remove("hide");
 };
 
+// ========================
+// ==== event listener ====
+// ========================
+
+// --- viewRepos event listener ---
+
+viewRepos.addEventListener("click", function () {
+  repos.classList.remove("hide");
+  repoData.classList.add("hide");
+  this.classList.add("hide");
+});
+
+// ========================
+// ==== event listener ====
+// ========================
+
+// --- filterInput event listener ---
+
+filterInput.addEventListener("input", function (e) {
+  const inputValue = e.target.value;
+  const repos = document.querySelectorAll(".repo");
+  const lowerInputValue = inputValue.toLowerCase();
+
+  for (let repo of repos) {
+    const lowerTextRepo = repo.innerText.toLowerCase();
+
+    if (lowerTextRepo.includes(lowerInputValue)) {
+      repo.classList.remove("hide");
+    } else {
+      repo.classList.add("hide");
+    }
+  }
+});
+
 // ==== fetch data --> init program ====
+// --- comment out due to rate limit --> GitHub API calls ---
 
 fetchGithub();
 fetchGithubRepos();
